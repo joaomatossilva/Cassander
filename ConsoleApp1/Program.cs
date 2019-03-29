@@ -14,14 +14,14 @@ namespace ConsoleApp1
 
             var cluster = builder.Build();
 
-            var session = cluster.Connect("localhost_interstore");
+            var session = cluster.Connect("cassander");
 
-            var statement = new SimpleStatement("SELECT * FROM Assistants_by_id");
-            var assistants = session.Query<Assistant>(statement);
+            var statement = new SimpleStatement("SELECT * FROM books");
+            var books = session.Query<Books>(statement);
 
-            foreach (var assistant in assistants)
+            foreach (var book in books)
             {
-                Console.WriteLine($"{assistant.id} {assistant.merchant_location_id} {assistant.creation_date}");
+                Console.WriteLine($"{book.id} {book.stock} {book.creation_date} {book.name}");
             }
         }
     }
