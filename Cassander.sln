@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{015DEEDD-887A-45EF-94B1-497E86E352F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cassander", "..\Cassander\Cassander\Cassander.csproj", "{70155A7D-CF9C-4E18-B009-19BBBF219735}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchmarkMappers", "BenchmarkMappers\BenchmarkMappers.csproj", "{302EFA88-60E5-4825-8EB5-DDBA1A28FFD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{015DEEDD-887A-45EF-94B1-497E86E352F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{015DEEDD-887A-45EF-94B1-497E86E352F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{015DEEDD-887A-45EF-94B1-497E86E352F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70155A7D-CF9C-4E18-B009-19BBBF219735}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70155A7D-CF9C-4E18-B009-19BBBF219735}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70155A7D-CF9C-4E18-B009-19BBBF219735}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70155A7D-CF9C-4E18-B009-19BBBF219735}.Release|Any CPU.Build.0 = Release|Any CPU
+		{302EFA88-60E5-4825-8EB5-DDBA1A28FFD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{302EFA88-60E5-4825-8EB5-DDBA1A28FFD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{302EFA88-60E5-4825-8EB5-DDBA1A28FFD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{302EFA88-60E5-4825-8EB5-DDBA1A28FFD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
