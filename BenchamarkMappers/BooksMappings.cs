@@ -2,16 +2,17 @@
 {
     using Cassandra.Mapping;
 
-    public class AssistantMappings : Mappings
+    public class BooksMappings : Mappings
     {
-        public AssistantMappings()
+        public BooksMappings()
         {
-            this.For<Assistant>()
-                .TableName("assistants_by_id")
+            this.For<Book>()
+                .TableName("books")
                 .PartitionKey("id")
                 .Column(x => x.id, cm => cm.WithName("id"))
-                .Column(x => x.merchant_location_id, cm => cm.WithName("merchant_location_id"))
+                .Column(x => x.stock, cm => cm.WithName("stock"))
                 .Column(x => x.creation_date, cm => cm.WithName("creation_date"))
+                .Column(x => x.name, cm => cm.WithName("name"))
                 .ExplicitColumns();
         }
     }

@@ -9,6 +9,7 @@
     using Cassandra.Mapping;
 
     [CoreJob]
+    [MemoryDiagnoser]
     public class CassandraBenchmark
     {
         private ISession Session { get; set; }
@@ -22,35 +23,51 @@
 
             var cluster = builder.Build();
 
-            Session = cluster.Connect("localhost_interstore");
+            Session = cluster.Connect("cassander");
             Mapper = new Mapper(Session);
 
-            MappingConfiguration.Global.Define<AssistantMappings>();
+            MappingConfiguration.Global.Define<BooksMappings>();
+
+            Session.Execute("TRUNCATE TABLE books");
+
+            for (int i = 0; i < 1000; i++)
+            {
+                var book = new Book
+                {
+                    id = Guid.NewGuid(),
+                    creation_date = DateTimeOffset.Now,
+                    name = Guid.NewGuid().ToString(),
+                    stock = i
+                };
+                Mapper.Insert(book);
+            }
+
         }
 
         [Benchmark]
-        public List<Assistant> UsingCassandraMapper()
+        public List<Book> UsingCassandraMapper()
         {
-            return Mapper.Fetch<Assistant>("SELECT * FROM Assistants_by_id").ToList();
+            return Mapper.Fetch<Book>("SELECT * FROM books").ToList();
         }
 
         [Benchmark]
-        public List<Assistant> UsingCassander()
+        public List<Book> UsingCassander()
         {
-            var simpleStatement = new SimpleStatement("SELECT * FROM Assistants_by_id");
-            return Session.Query<Assistant>(simpleStatement).ToList();
+            var simpleStatement = new SimpleStatement("SELECT * FROM books");
+            return Session.Query<Book>(simpleStatement).ToList();
         }
 
-        [Benchmark]
-        public List<Assistant> UsingSession()
+        [Benchmark(Baseline = true)]
+        public List<Book> UsingSession()
         {
-            var simpleStatement = new SimpleStatement("SELECT * FROM Assistants_by_id");
+            var simpleStatement = new SimpleStatement("SELECT * FROM books");
             var rowset = Session.Execute(simpleStatement);
-            return rowset.Select(x => new Assistant()
+            return rowset.Select(x => new Book()
             {
                 id = x.GetValue<Guid>("id"),
-                merchant_location_id = x.GetValue<int>("merchant_location_id"),
-                creation_date = x.GetValue<DateTimeOffset>("creation_date")
+                stock = x.GetValue<int>("stock"),
+                creation_date = x.GetValue<DateTimeOffset>("creation_date"),
+                name = x.GetValue<string>("name")
             }).ToList();
         }
     }
