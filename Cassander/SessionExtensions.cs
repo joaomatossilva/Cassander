@@ -1,7 +1,5 @@
 ﻿namespace Cassander
 {
-    using System;
-    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using Cassandra;
 
@@ -19,21 +17,14 @@
         public static IEnumerable<T> Query<T>(this ISession session, IStatement statement)
         {
             var results = session.Execute(statement);
-
-            var type = (TypeDescriptor<T>)DescriptorCache ?? (TypeDescriptor<T>)(DescriptorCache = TypeDescriptor<T>.CreateDescriptor());
+            var type = (TypeDescriptor<T>)DescriptorCache ?? (TypeDescriptor<T>)(DescriptorCache = TypeDescriptor<T>.CreateDescriptor(results.Columns));
 
             foreach (var result in results)
             {
                 var entity = type.InstanceCreatorHandler();
                 foreach (var field in type.Fields)
                 {
-                    var column = result.GetColumn(field.PropertyInfo.Name);
-                    if (column == null)
-                    {
-                        continue;
-                    }
-
-                    var value = result.GetValue(column.Type, column.Index);
+                    var value = result.GetValue(field.SourceType, field.SourceIndex);
                     field.SetHandler(entity, value);
                 }
 

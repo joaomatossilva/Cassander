@@ -26,6 +26,8 @@
             Session = cluster.Connect("cassander");
             Mapper = new Mapper(Session);
 
+            Session.Execute("CREATE TABLE IF NOT EXISTS books (id uuid, stock int, creation_date Timestamp, name text, PRIMARY KEY (id))");
+
             MappingConfiguration.Global.Define<BooksMappings>();
 
             Session.Execute("TRUNCATE TABLE books");
@@ -34,10 +36,10 @@
             {
                 var book = new Book
                 {
-                    id = Guid.NewGuid(),
-                    creation_date = DateTimeOffset.Now,
-                    name = Guid.NewGuid().ToString(),
-                    stock = i
+                    Id = Guid.NewGuid(),
+                    CreationDate = DateTimeOffset.Now,
+                    Name = Guid.NewGuid().ToString(),
+                    Stock = i
                 };
                 Mapper.Insert(book);
             }
@@ -64,10 +66,10 @@
             var rowset = Session.Execute(simpleStatement);
             return rowset.Select(x => new Book()
             {
-                id = x.GetValue<Guid>("id"),
-                stock = x.GetValue<int>("stock"),
-                creation_date = x.GetValue<DateTimeOffset>("creation_date"),
-                name = x.GetValue<string>("name")
+                Id = x.GetValue<Guid>("id"),
+                Stock = x.GetValue<int>("stock"),
+                CreationDate = x.GetValue<DateTimeOffset>("creation_date"),
+                Name = x.GetValue<string>("name")
             }).ToList();
         }
     }

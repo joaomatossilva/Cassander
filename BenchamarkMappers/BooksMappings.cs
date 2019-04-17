@@ -9,10 +9,10 @@
             this.For<Book>()
                 .TableName("books")
                 .PartitionKey("id")
-                .Column(x => x.id, cm => cm.WithName("id"))
-                .Column(x => x.stock, cm => cm.WithName("stock"))
-                .Column(x => x.creation_date, cm => cm.WithName("creation_date"))
-                .Column(x => x.name, cm => cm.WithName("name"))
+                .Column(x => x.Id, cm => cm.WithName("id"))
+                .Column(x => x.Stock, cm => cm.WithName("stock"))
+                .Column(x => x.CreationDate, cm => cm.WithName("creation_date"))
+                .Column(x => x.Name, cm => cm.WithName("name"))
                 .ExplicitColumns();
         }
     }

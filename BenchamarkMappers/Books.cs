@@ -4,9 +4,9 @@ namespace BenchmarkMappers
 {
     public class Book
     {
-        public Guid id { get; set; }
-        public DateTimeOffset creation_date { get; set; }
-        public int stock { get; set; }
-        public string name { get; set; }
+        public Guid Id { get; set; }
+        public DateTimeOffset CreationDate { get; set; }
+        public int Stock { get; set; }
+        public string Name { get; set; }
     }
 }
