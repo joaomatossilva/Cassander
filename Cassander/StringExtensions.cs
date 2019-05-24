@@ -9,17 +9,47 @@ namespace Cassander
         static readonly Regex splitter = new Regex("(?<=[a-z])(?=[A-Z-_\\W])");
         static readonly Regex cleaner = new Regex("[\\W-_]+");
 
-        public static string Normalize(string text)
+        public static string NormalizeNames(this string text)
         {
             var wordMatches = splitter.Matches(text);
-            var words = new List<string>(wordMatches.Count);
+            if (wordMatches.Count == 0)
+            {
+                return text.ToLowerInvariant();
+            }
+
+            var words = new List<string>(wordMatches.Count + 1);
+            var startIndex = 0;
             foreach(Match match in wordMatches)
             {
-                var word = cleaner.Replace(match.Value, String.Empty);
-                words.Add(word.ToLower());
+                var word = GetWord(text, startIndex, match.Index - startIndex);
+                startIndex = match.Index;
+                
+
+                if(word.Length == 0)
+                {
+                    continue;
+                }
+
+                words.Add(word.ToLowerInvariant());
+            }
+
+            if (startIndex < text.Length)
+            {
+                var word = GetWord(text, startIndex, text.Length - startIndex);
+                if (word.Length > 0)
+                {
+                    words.Add(word.ToLowerInvariant());
+                }
             }
 
             return String.Join("-", words);
+        }
+
+        private static string GetWord(string text, int startIndex, int lenght)
+        {
+            var word = text.Substring(startIndex, lenght);
+            word = cleaner.Replace(word, String.Empty);
+            return word;
         }
     }
 }
