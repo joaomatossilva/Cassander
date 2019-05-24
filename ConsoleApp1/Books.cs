@@ -12,5 +12,13 @@ namespace ConsoleApp1
         public DateTimeOffset creation_date { get; set; }
         public int stock { get; set; }
         public string name { get; set; }
+
+        public AuthorTitle Authortitle { get; set; }
+    }
+
+    public class AuthorTitle
+    {
+        public string Author { get; set; }
+        public string Title { get; set; }
     }
 }
